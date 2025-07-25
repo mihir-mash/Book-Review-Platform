@@ -11,8 +11,10 @@ app.use(cors())
 
 const PORT = process.env.PORT || 5000
 
+const reviewRoutes = require('./routes/reviewRoutes')
 const bookRoutes = require('./routes/bookRoutes')
 const authRoutes = require('./routes/authRoutes')
+app.use('/books', reviewRoutes)
 app.use('/books', bookRoutes)
 app.use('/auth', authRoutes)
 
