@@ -11,7 +11,9 @@ app.use(cors())
 
 const PORT = process.env.PORT || 5000
 
+const bookRoutes = require('./routes/bookRoutes')
 const authRoutes = require('./routes/authRoutes')
+app.use('/books', bookRoutes)
 app.use('/auth', authRoutes)
 
 mongoose.connect(process.env.MONGO_URI, {
