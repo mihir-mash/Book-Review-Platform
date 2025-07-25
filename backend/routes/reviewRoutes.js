@@ -10,6 +10,8 @@ router.post('/:bookId/reviews', auth, async(req, res) => {
   const {review_text, rating} = req.body
   const {bookId} = req.params
 
+  console.log('Incoming review POST:', {bookId, review_text, rating, user: req.user});
+
   try {
     const review = new Review({
       book: bookId,
@@ -21,6 +23,7 @@ router.post('/:bookId/reviews', auth, async(req, res) => {
     res.status(201).json(review)
   } 
   catch (err) {
+    console.error('Error adding review:', err);
     res.status(500).json({message: 'Error adding review'})
   }
 })
@@ -35,7 +38,7 @@ router.get('/:bookId/reviews', async(req, res) => {
   } 
   catch (err) {
   console.error(err)
-  res.status(500).json({message: 'Error adding review' })
+  res.status(500).json({message: 'Error adding review'})
 }
 })
 

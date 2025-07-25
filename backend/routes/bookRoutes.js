@@ -9,7 +9,7 @@ const router = express.Router()
 router.post('/', auth, async(req, res) => {
   const {title, author, genre} = req.body
   try {
-    const book = new Book({title, author, genre, createdBy: req.user})
+    const book = new Book({title, author, genre, createdBy: req.user.id})
     await book.save()
     res.status(201).json(book)
   } 
@@ -21,8 +21,8 @@ router.post('/', auth, async(req, res) => {
 //Get all books (with optional filters + pagination)
 router.get('/', async(req, res) => {
   const {genre, author, page = 1, limit = 10} = req.query
-
   const query = {}
+  
   if(genre) 
     query.genre = genre
   if(author) 
