@@ -11,7 +11,8 @@ app.use(cors())
 
 const PORT = process.env.PORT || 5000
 
-// Routes will be added here later
+const authRoutes = require('./routes/authRoutes')
+app.use('/auth', authRoutes)
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
