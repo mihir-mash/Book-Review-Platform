@@ -1,49 +1,64 @@
-import {useState} from 'react'
-import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Register() {
-  
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [message, setMessage] = useState('')
-  const navigate = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    setMessage('');
+    setError('');
     try {
-      const res = await axios.post('http://localhost:5000/auth/signup', {email, password })
-      setMessage('Registration successful! Redirecting to login...')
-      setTimeout(() => navigate('/login'), 1500)
-    } 
-    catch (err) {
-      setMessage(err.response?.data?.message || 'Registration failed')
+      await axios.post('http://localhost:5000/auth/signup', { email, password });
+      setMessage('Registration successful! Redirecting to login...');
+      setTimeout(() => navigate('/login'), 2000);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Registration failed. Please try again.');
     }
-  }
+  };
 
   return (
-    <div>
-      <h2>Register</h2>
+    <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        /><br/>
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        /><br/>
-        <button type="submit">Register</button>
+        <h2>Create an Account</h2>
+        <div className="input-group">
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            className="input"
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="input-group">
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            className="input"
+            type="password"
+            placeholder="Must be at least 6 characters"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" className="button">Register</button>
+        {message && <p className="success-message">{message}</p>}
+        {error && <p className="error-message">{error}</p>}
       </form>
-      <p>{message}</p>
+       <p style={{ marginTop: '1rem' }}>
+        Already have an account? <Link to="/login">Login here</Link>
+      </p>
     </div>
-  )
+  );
 }
 
-export default Register
+export default Register;

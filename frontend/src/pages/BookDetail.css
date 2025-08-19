@@ -1,0 +1,63 @@
+.book-detail-container {
+    display: grid;
+    gap: 3rem;
+  }
+  
+  .book-info-card {
+    background: var(--white-color);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px var(--shadow-color);
+  }
+  
+  .book-detail-title {
+    margin-top: 0;
+    font-size: 2.5rem;
+  }
+  
+  .reviews-list {
+    display: grid;
+    gap: 1.5rem;
+  }
+  
+  .review-card {
+    background: var(--white-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 5px solid var(--primary-color);
+  }
+  
+  .review-rating {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .review-text {
+    font-style: italic;
+    font-size: 1.1rem;
+    margin: 0 0 1rem 0;
+  }
+  
+  .review-author {
+    text-align: right;
+    font-weight: 600;
+    color: #555;
+    margin: 0;
+  }
+  
+  .add-review-section {
+      background: var(--white-color);
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px var(--shadow-color);
+  }
+  
+  .add-review-section h4 {
+      margin-top: 0;
+      text-align: center;
+      font-size: 1.5rem;
+  }
+  
+  .review-form .input-group {
+      margin-bottom: 1rem;
+  }
