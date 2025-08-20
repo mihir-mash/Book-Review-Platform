@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 
 function AddBook() {
@@ -9,17 +9,15 @@ function AddBook() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
     setError('');
     try {
-      await axios.post('http://localhost:5000/books', {
+      await api.post('/books', {
         title, author, genre
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
       });
 
       setMessage('Book added successfully! Redirecting...');

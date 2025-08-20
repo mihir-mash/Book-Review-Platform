@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api/axios';
 import { Link } from 'react-router-dom';
 import './Books.css';
 
@@ -19,16 +19,13 @@ function Books() {
       setLoading(true);
       setError('');
       try {
-        const token = localStorage.getItem('token');
         const query = new URLSearchParams();
         if (authorFilter) query.append('author', authorFilter);
         if (genreFilter) query.append('genre', genreFilter);
         query.append('page', page);
         query.append('limit', limit);
 
-        const res = await axios.get(`http://localhost:5000/books?${query.toString()}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await api.get(`/books?${query.toString()}`);
         
         setBooks(res.data);
       } catch (err) {
@@ -76,7 +73,7 @@ function Books() {
             type="text"
             placeholder="Filter by genre"
             value={genreFilter}
-            onChange={(e) => setGenreFilter(e.get.value)}
+            onChange={(e) => setGenreFilter(e.target.value)}
           />
           <button type="submit" className="button">Apply</button>
         </form>

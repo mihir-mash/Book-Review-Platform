@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
-import axios from 'axios';
+import api from '../api/axios';
 import './BookDetail.css'; // Create this new CSS file
 
 function BookDetail() {
@@ -12,23 +12,19 @@ function BookDetail() {
   const [error, setError] = useState('');
   const [submitError, setSubmitError] = useState('');
 
-  const token = localStorage.getItem('token');
+  
 
   const fetchBookAndReviews = useCallback(async () => {
     try {
-      const bookRes = await axios.get(`http://localhost:5000/books/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const bookRes = await api.get(`/books/${id}`);
       setBook(bookRes.data);
 
-      const reviewsRes = await axios.get(`http://localhost:5000/reviews/${id}/reviews`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const reviewsRes = await api.get(`/reviews/${id}/reviews`);
       setReviews(reviewsRes.data);
     } catch (err) {
       setError('Failed to load book details. Please go back and try again.');
     }
-  }, [id, token]);
+  }, [id]);
 
   useEffect(() => {
     fetchBookAndReviews();
@@ -38,11 +34,9 @@ function BookDetail() {
     e.preventDefault();
     setSubmitError('');
     try {
-      await axios.post(`http://localhost:5000/reviews/${id}/reviews`, {
+      await api.post(`/reviews/${id}/reviews`, {
         review_text: reviewText,
         rating: Number(rating)
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
       });
       setReviewText('');
       setRating(5);

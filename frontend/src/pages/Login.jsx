@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api/axios';
 import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
@@ -12,7 +12,7 @@ function Login() {
     e.preventDefault();
     setError(''); // Reset error on new submission
     try {
-      const res = await axios.post('http://localhost:5000/auth/login', { email, password });
+      const res = await api.post('/auth/login', { email, password });
       localStorage.setItem('token', res.data.token);
       navigate('/books');
     } catch (err) {
